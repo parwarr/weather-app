@@ -26,8 +26,8 @@ function Get-GeoCode {
   $jsonObject = $geocodeResponse | ConvertFrom-Json
 
   # Access the lat and lon properties
-  $lat = $jsonObject.lat
-  $lon = $jsonObject.lon
+  $lat = $jsonObject.lat[0]
+  $lon = $jsonObject.lon[0]
 
   # Output the latitude and longitude
   Write-Host "Latitude: $lat"
@@ -35,13 +35,11 @@ function Get-GeoCode {
 }
 
 try {
-  Get-GeoCode("Bern")
+   $city = Read-Host "Enter City"
+  Get-GeoCode($city)
   $result = Invoke-WebRequest -Uri "${WHEATERAPI}?latitude=${lat}&longitude=${lon}&current_weather=true";
-  $jsonObject = $result | ConvertFrom-Json
-  $current = $jsonObject.current_weather
-  $temp = $current.temperature.value
-  $state = $current.weather_code.value
-  Write-Host "The current temperature is $temp degrees and the weather state is $state"
+
+  Write-Host $result
 
 }
 catch {
