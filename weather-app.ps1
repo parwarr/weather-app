@@ -34,8 +34,10 @@ function Get-GeoCode {
     Set-Variable -Name "long" -Value $jsonObject.lon[0] -Scope Global
 
     # Check if lat and lon are null if so throw an error
+    #ToDo; Errorhandeling fixen
     if ($null -eq $lat -or $null -eq $long) {
       throw "Could not find lat and lon for $city"
+      exit 1
     } 
 
     # Return the lat and lon values
