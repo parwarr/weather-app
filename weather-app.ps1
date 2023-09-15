@@ -11,17 +11,14 @@
 Clear-Host
 
 #this variable is for the api link
-$api = "https://api.open-meteo.com/v1/forecast?"
-
-$lat = 46.9481
-$long = 7.4474
+$weatherApiUrl = "https://api.open-meteo.com/v1/forecast?"
 
 # here is the url variable that will give out the information in terminal
-$url = Invoke-WebRequest -uri "$api&latitude=$lat&longitude=$long&current_weather=true"
-$urlF = Invoke-WebRequest -uri "$api&latitude=$lat&longitude=$long&current_weather=true&temperature_unit=fahrenheit" 
+$weatherState = Invoke-WebRequest -uri "$api&latitude=$lat&longitude=$long&current_weather=true"
+#$urlF = Invoke-WebRequest -uri "$api&latitude=$lat&longitude=$long&current_weather=true&temperature_unit=fahrenheit" 
 
 
-$result = $url | ConvertFrom-Json
+$result = $weatherState | ConvertFrom-Json
 $temp = $result.current_weather;
 
 #output to terminal
