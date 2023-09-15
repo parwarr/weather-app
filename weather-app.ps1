@@ -41,7 +41,7 @@ function Get-GeoCode {
     } 
 
     # Return the lat and lon values
-    return $lat, $long
+    # return $lat, $long
   }
   catch {
      # Catch errors $_ is a special variable integrated in Powershell that contains the error message
