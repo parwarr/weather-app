@@ -19,7 +19,7 @@ function Get-GeoCode {
     [string]$city
   )
 
-  # Make the web request and store the JSON response in $geocode
+  # Make the web request and store the JSON response in $geocode, ErrorAction Stop stops the script execution at the point an error occurs, Select-Object selects specific properties of objects, ExpandProperty expands details about a particular property
   $geoCodeResp = Invoke-WebRequest -Uri "${geocodeApi}${city}" -ErrorAction Stop | Select-Object -ExpandProperty Content
 
   try {
