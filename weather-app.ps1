@@ -22,22 +22,7 @@ $urlF = Invoke-WebRequest -uri "$api&latitude=$lat&longitude=$long&current_weath
 
 
 $result = $url | ConvertFrom-Json
-$temp = $result.temperature.value;
+$temp = $result.current_weather;
 
 #output to terminal
 Write-Host "$temp"
-
-#choose if you want the output in celsius or fahrenheit
-
-#write-host "Celsius or Fahrenheit"
-#read-host ""
-    if (Read-Host "Celsius") {
-        <# Action to perform if the condition is true #>
-            write-host "$url"
-    }
-    elseif (Read-Host "Fahrenheit") {
-        <# Action when this condition is true #>
-    }{
-        <# Action when all if and elseif conditions are false #>
-            write-host "$urlF"
-    }
