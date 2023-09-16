@@ -40,8 +40,6 @@ function GetGeoCode {
       exit 1
     } 
 
-    # Return the lat and lon values
-    # return $lat, $long
   }
   catch {
      # Catch errors $_ is a special variable integrated in Powershell that contains the error message
@@ -52,79 +50,92 @@ function GetGeoCode {
 
 function ShowWeatherInGui {
   param (
-    [string]$city,
-    [float]$lat,
-    [float]$long,
-    [string]$result
+      [string]$city,
+      [float]$lat,
+      [float]$long,
+      [string]$result,
+      [string]$titleForPrompt
+    
   )
-  #GUI
-# Implementing GUI
-Add-Type -AssemblyName System.Windows.Forms
 
-$basicForm = New-Object Windows.Forms.Form
-$basicForm.Text = "Weather App"
-$basicForm.Size = New-Object Drawing.Size(400, 200)
-$basicForm.StartPosition = "CenterScreen"
+  # Create a form
+  $form = New-Object Windows.Forms.Form
+  $form.Text = "Weather App"
+  $form.Size = New-Object Drawing.Size(400, 200)
+  $form.StartPosition = "CenterScreen"
 
-# Create labels for City, Coordinates, and Temperature
-$labelCity = New-Object Windows.Forms.Label
-$labelCity.Location = New-Object Drawing.Point(20, 20)
-$labelCity.Size = New-Object Drawing.Size(100, 20)
-$labelCity.Text = "City:"
-$basicForm.Controls.Add($labelCity)
+  # Create labels for City, Coordinates, and Temperature
+  $labelCity = New-Object Windows.Forms.Label
+  $labelCity.Location = New-Object Drawing.Point(20, 20)
+  $labelCity.Size = New-Object Drawing.Size(100, 20)
+  $labelCity.Text = "City:"
+  $form.Controls.Add($labelCity)
 
-$labelCoordinates = New-Object Windows.Forms.Label
-$labelCoordinates.Location = New-Object Drawing.Point(20, 50)
-$labelCoordinates.Size = New-Object Drawing.Size(100, 20)
-$labelCoordinates.Text = "Coordinates:"
-$basicForm.Controls.Add($labelCoordinates)
+  # Create labels to display data
+  $labelCityData = New-Object Windows.Forms.Label
+  $labelCityData.Location = New-Object Drawing.Point(120, 20)
+  $labelCityData.Size = New-Object Drawing.Size(260, 20)
+  $labelCityData.Text = $city
+  $form.Controls.Add($labelCityData)
 
-$labelTemperature = New-Object Windows.Forms.Label
-$labelTemperature.Location = New-Object Drawing.Point(20, 80)
-$labelTemperature.Size = New-Object Drawing.Size(100, 20)
-$labelTemperature.Text = "Temperature:"
-$basicForm.Controls.Add($labelTemperature)
+  $labelCoordinates = New-Object Windows.Forms.Label
+  $labelCoordinates.Location = New-Object Drawing.Point(20, 50)
+  $labelCoordinates.Size = New-Object Drawing.Size(100, 20)
+  $labelCoordinates.Text = "Coordinates:"
+  $form.Controls.Add($labelCoordinates)
 
-# Create labels to display data
-$labelCityData = New-Object Windows.Forms.Label
-$labelCityData.Location = New-Object Drawing.Point(120, 20)
-$labelCityData.Size = New-Object Drawing.Size(260, 20)
-$labelCityData.Text = $city
-$basicForm.Controls.Add($labelCityData)
+  $labelCoordinatesData = New-Object Windows.Forms.Label
+  $labelCoordinatesData.Location = New-Object Drawing.Point(120, 50)
+  $labelCoordinatesData.Size = New-Object Drawing.Size(260, 20)
+  $labelCoordinatesData.Text = "$lat, $long"
+  $form.Controls.Add($labelCoordinatesData)
 
-$labelCoordinatesData = New-Object Windows.Forms.Label
-$labelCoordinatesData.Location = New-Object Drawing.Point(120, 50)
-$labelCoordinatesData.Size = New-Object Drawing.Size(260, 20)
-$labelCoordinatesData.Text = "$lat, $long"
-$basicForm.Controls.Add($labelCoordinatesData)
+# Create labels for Weather Unit
+  $labelWeatherUnit = New-Object Windows.Forms.Label
+  $labelWeatherUnit.Location = New-Object Drawing.Point(20, 80)
+  $labelWeatherUnit.Size = New-Object Drawing.Size(100, 20)
+  $labelWeatherUnit.Text = "Weather Unit:"
+  $form.Controls.Add($labelWeatherUnit)
 
-$labelTemperatureData = New-Object Windows.Forms.Label
-$labelTemperatureData.Location = New-Object Drawing.Point(120, 80)
-$labelTemperatureData.Size = New-Object Drawing.Size(260, 20)
-$labelTemperatureData.Text = "$result Celsius"
-$basicForm.Controls.Add($labelTemperatureData)
+  $labelWeatherUnitData = New-Object Windows.Forms.Label
+  $labelWeatherUnitData.Location = New-Object Drawing.Point(120, 80)
+  $labelWeatherUnitData.Size = New-Object Drawing.Size(260, 20)
+  $labelWeatherUnitData.Text = $titleForPrompt
+  $form.Controls.Add($labelWeatherUnitData)
 
-# Set label fonts and styles
-$font = New-Object Drawing.Font("Arial", 12, [Drawing.FontStyle]::Regular)
+  $labelTemperature = New-Object Windows.Forms.Label
+  $labelTemperature.Location = New-Object Drawing.Point(20, 110)
+  $labelTemperature.Size = New-Object Drawing.Size(100, 20)
+  $labelTemperature.Text = "Temperature:"
+  $form.Controls.Add($labelTemperature)
 
-$labelCity.Font = $font
-$labelCoordinates.Font = $font
-$labelTemperature.Font = $font
+  $labelTemperatureData = New-Object Windows.Forms.Label
+  $labelTemperatureData.Location = New-Object Drawing.Point(120, 110)
+  $labelTemperatureData.Size = New-Object Drawing.Size(260, 20)
+  $labelTemperatureData.Text = "$result"
+  $form.Controls.Add($labelTemperatureData)
 
-$labelCityData.Font = $font
-$labelCoordinatesData.Font = $font
-$labelTemperatureData.Font = $font
+  # Set font and alignment for labels
+  $font = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Regular)
+  $labelCity.Font = $font
+  $labelCoordinates.Font = $font
+  $labelTemperature.Font = $font
+  $labelCityData.Font = $font
+  $labelCoordinatesData.Font = $font
+  $labelTemperatureData.Font = $font
+  $labelWeatherUnit.Font = $font
+  $labelWeatherUnitData.Font = $font
+  $labelCity.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelCoordinates.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelTemperature.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelCityData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelCoordinatesData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelTemperatureData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelWeatherUnit.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelWeatherUnitData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
 
-# Center align text in labels
-$labelCity.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-$labelCoordinates.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-$labelTemperature.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-
-$labelCityData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-$labelCoordinatesData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-$labelTemperatureData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-
-$basicForm.ShowDialog()
+  # Show the form as a dialog
+  $form.ShowDialog()
 }
 
 # Function that shows the result
@@ -133,15 +144,17 @@ function ShowResult {
     $city = Read-Host "Enter City" 
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
- 
-     #here is the url variable that will give out the information in terminal
-     $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true" 
-      
-     #here is the variable that will give out the information in terminal
-     $result = $weatherState.current_weather.temperature;
+    
+    # Get choice from user
+    $choice = Read-Host "Choice: [1] Celsius, [2] Fahrenheit"
 
-     #call the function that will show the information in the GUI
-     ShowWeatherInGui($city, $lat, $long, $result)
+    # Get the weather state and API URL from the API
+    $result, $weatherApi, $titleForPrompt = GetTempUnit($choice)
+
+    Write-Host $result, $weatherApi, $titleForPrompt
+
+    # Call the function that will show the information in the GUI
+    ShowWeatherInGui $city $lat $long $result $titleForPrompt
 }
 
 # Main script
@@ -154,6 +167,31 @@ catch {
   Write-Host "Error occurred: $_ "
 }
 
+function GetTempUnit {
+  param (
+   [int]$choice
+  )
 
+  switch($choice) {
+    1 { 
+      $titleForPrompt = "Celsius"
+      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true"
+      $result = $weatherState.current_weather.temperature
+      return $result, $weatherApi, $titleForPrompt
+    }
+    2 { 
+      $titleForPrompt = "Fahrenheit"
+      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true&temperature_unit=fahrenheit"
+      $result = $weatherState.current_weather.temperature
+      return $result, $weatherApi, $titleForPrompt
+    }
+    default {
+    # This block will execute if $choice doesn't match any valid option
+    $errorMessage = "Invalid option: $choice"
+    Write-Host $errorMessage
+    Throw $errorMessage
+    }
+  }
+}
 
 
