@@ -33,19 +33,26 @@ function GetGeoCode {
     Set-Variable -Name "lat" -Value $jsonObject.lat[0] -Scope Global
     Set-Variable -Name "long" -Value $jsonObject.lon[0] -Scope Global
 
-    # Check if lat and lon are null if so throw an error
-    #ToDo; Errorhandeling fixen
-    if ($null -eq $lat -or $null -eq $long) {
-      throw "Could not find lat and lon for $city"
-      exit 1
-    } 
-
   }
   catch {
      # Catch errors $_ is a special variable integrated in Powershell that contains the error message
     Write-Host "Error occurred: $_ "
   }
 
+}
+
+function validateCityName {
+  param (
+    [string]$city
+  )
+
+  # Validate the city name against the pattern
+  if ($city -match '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
+    Write-Host "Error: City name should contain only letters (alphabets)."
+    return $false
+    }
+
+  return $true
 }
 
 function ShowWeatherInGui {
@@ -140,8 +147,22 @@ function ShowWeatherInGui {
 
 # Function that shows the result
 function ShowResult {
+  for ($i = 1;$i -le 10;$i++) {
     # Get the city from the user
-    $city = Read-Host "Enter City" 
+    $city = Read-Host "Enter City"
+
+    # Validate the city name
+    $isValid = validateCityName -city $city
+
+    if ($isValid) {
+        # If the input is valid, exit the loop
+        break
+    }
+
+    # If the input is not valid, prompt the user again
+    Write-Host "Please enter a valid city name with only letters (alphabets)."
+  }
+  
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
     
