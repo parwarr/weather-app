@@ -9,7 +9,7 @@
 #4. Create nice Terminal appearance for entering the City
 #5. Create a Dashboard for the Weather Output
 
-#clears the consol bevor activating the script
+#clears the terminal for a better overview
 Clear-Host
 
 #Varibales
@@ -49,33 +49,6 @@ function GetGeoCode {
   }
 
 }
-
-try {
-    # Get the city from the user
-   $city = Read-Host "Enter City" 
-   # Call GeoCode function with the city the user inserted. 
-    GetGeoCode($city)
-
-    #here is the url variable that will give out the information in terminal
-    $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true" 
-     
-    #here is the variable that will give out the information in terminal
-    $result = $weatherState.current_weather.temperature;
-
-    #output to terminal
-    Write-Host "$result"
-
-    #call the function that will show the information in the GUI
-    ShowWeatherInGui($city, $lat, $long, $result)
-
-}
-catch {
- # Catch errors $_ is a special variable integrated in Powershell that contains the error message
-  Write-Host "Error occurred: $_ "
-}
-
-
-
 
 function ShowWeatherInGui {
   param (
@@ -153,3 +126,37 @@ $labelTemperatureData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
 
 $basicForm.ShowDialog()
 }
+
+# Function that shows the result
+function ShowResult {
+    # Get the city from the user
+    $city = Read-Host "Enter City" 
+    # Call GeoCode function with the city the user inserted. 
+     GetGeoCode($city)
+ 
+     #here is the url variable that will give out the information in terminal
+     $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true" 
+      
+     #here is the variable that will give out the information in terminal
+     $result = $weatherState.current_weather.temperature;
+ 
+     #output to terminal
+     Write-Host "$result"
+ 
+     #call the function that will show the information in the GUI
+     ShowWeatherInGui($city, $lat, $long, $result)
+}
+
+# Main script
+try {
+  # Call the function that will show the result
+  ShowResult
+}
+catch {
+ # Catch errors $_ is a special variable integrated in Powershell that contains the error message
+  Write-Host "Error occurred: $_ "
+}
+
+
+
+
