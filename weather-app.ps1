@@ -12,7 +12,7 @@
 #clears the terminal for a better overview
 Clear-Host
 
-#Varibales
+#Global Varibales
 $geocodeApi="https://geocode.maps.co/search?q=";
 $weatherApi= "https://api.open-meteo.com/v1/forecast";
 
@@ -139,10 +139,7 @@ function ShowResult {
       
      #here is the variable that will give out the information in terminal
      $result = $weatherState.current_weather.temperature;
- 
-     #output to terminal
-     Write-Host "$result"
- 
+
      #call the function that will show the information in the GUI
      ShowWeatherInGui($city, $lat, $long, $result)
 }
