@@ -17,7 +17,7 @@ $geocodeApi="https://geocode.maps.co/search?q=";
 $weatherApi= "https://api.open-meteo.com/v1/forecast";
 
 
-function Get-GeoCode {
+function GetGeoCode {
   param (
     [string]$city
   )
@@ -54,7 +54,7 @@ try {
     # Get the city from the user
    $city = Read-Host "Enter City" 
    # Call GeoCode function with the city the user inserted. 
-    Get-GeoCode($city)
+    GetGeoCode($city)
 
     #here is the url variable that will give out the information in terminal
     $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true" 
@@ -65,6 +65,8 @@ try {
     #output to terminal
     Write-Host "$result"
 
+    #call the function that will show the information in the GUI
+    ShowWeatherInGui($city, $lat, $long, $result)
 
 }
 catch {
@@ -72,3 +74,82 @@ catch {
   Write-Host "Error occurred: $_ "
 }
 
+
+
+
+function ShowWeatherInGui {
+  param (
+    [string]$city,
+    [float]$lat,
+    [float]$long,
+    [string]$result
+  )
+  #GUI
+# Implementing GUI
+Add-Type -AssemblyName System.Windows.Forms
+
+$basicForm = New-Object Windows.Forms.Form
+$basicForm.Text = "Weather App"
+$basicForm.Size = New-Object Drawing.Size(400, 200)
+$basicForm.StartPosition = "CenterScreen"
+
+# Create labels for City, Coordinates, and Temperature
+$labelCity = New-Object Windows.Forms.Label
+$labelCity.Location = New-Object Drawing.Point(20, 20)
+$labelCity.Size = New-Object Drawing.Size(100, 20)
+$labelCity.Text = "City:"
+$basicForm.Controls.Add($labelCity)
+
+$labelCoordinates = New-Object Windows.Forms.Label
+$labelCoordinates.Location = New-Object Drawing.Point(20, 50)
+$labelCoordinates.Size = New-Object Drawing.Size(100, 20)
+$labelCoordinates.Text = "Coordinates:"
+$basicForm.Controls.Add($labelCoordinates)
+
+$labelTemperature = New-Object Windows.Forms.Label
+$labelTemperature.Location = New-Object Drawing.Point(20, 80)
+$labelTemperature.Size = New-Object Drawing.Size(100, 20)
+$labelTemperature.Text = "Temperature:"
+$basicForm.Controls.Add($labelTemperature)
+
+# Create labels to display data
+$labelCityData = New-Object Windows.Forms.Label
+$labelCityData.Location = New-Object Drawing.Point(120, 20)
+$labelCityData.Size = New-Object Drawing.Size(260, 20)
+$labelCityData.Text = $city
+$basicForm.Controls.Add($labelCityData)
+
+$labelCoordinatesData = New-Object Windows.Forms.Label
+$labelCoordinatesData.Location = New-Object Drawing.Point(120, 50)
+$labelCoordinatesData.Size = New-Object Drawing.Size(260, 20)
+$labelCoordinatesData.Text = "$lat, $long"
+$basicForm.Controls.Add($labelCoordinatesData)
+
+$labelTemperatureData = New-Object Windows.Forms.Label
+$labelTemperatureData.Location = New-Object Drawing.Point(120, 80)
+$labelTemperatureData.Size = New-Object Drawing.Size(260, 20)
+$labelTemperatureData.Text = "$result Celsius"
+$basicForm.Controls.Add($labelTemperatureData)
+
+# Set label fonts and styles
+$font = New-Object Drawing.Font("Arial", 12, [Drawing.FontStyle]::Regular)
+
+$labelCity.Font = $font
+$labelCoordinates.Font = $font
+$labelTemperature.Font = $font
+
+$labelCityData.Font = $font
+$labelCoordinatesData.Font = $font
+$labelTemperatureData.Font = $font
+
+# Center align text in labels
+$labelCity.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+$labelCoordinates.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+$labelTemperature.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+
+$labelCityData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+$labelCoordinatesData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+$labelTemperatureData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+
+$basicForm.ShowDialog()
+}
