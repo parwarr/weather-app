@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Weather App is a project developed for a school module, LB1 (Lehrberufslehre 1), as part of an exam. This PowerShell script allows users to input a city, retrieve weather information from an API, and display it in a graphical user interface (GUI). The weather information includes details about the city, coordinates, temperature, and the selected temperature unit (°C or °F).
+The Weather App is a project developed for a school module, LB1, as part of an exam. This PowerShell script allows users to input a city, retrieve weather information from an API, and display it in a graphical user interface (GUI). The weather information includes details about the city, coordinates, temperature, and the selected temperature unit (°C or °F).
 
 ## Getting Started
 
