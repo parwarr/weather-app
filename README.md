@@ -40,7 +40,7 @@ The script consists of several functions and steps:
 
 ### Author
 
-- sth134864@stud.gibb.com
+- sth134864@stud.gibb.ch
 - hpa134085@stud.gibb.ch
 
 ## Requirements
