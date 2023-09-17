@@ -49,7 +49,7 @@ function validateCityName {
   )
 
   # Validate the city name against the pattern
-  if ($city -match '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
+  if ($city -eq '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
     Write-Host "Error: City name should contain only letters (alphabets)."
     return $false
     }
@@ -181,17 +181,19 @@ function ShowResult {
     $city = Read-Host "Enter City"
 
     # Validate the city name
-    $isValid = validateCityName -city $city
+    $isValid = validateCityName($city)
 
     if ($isValid) {
         # If the input is valid, exit the loop
         break
     }
 
-    # If the input is not valid, prompt the user again
-    Write-Host "Please enter a valid city name with only letters (alphabets)."
+    if ($i -eq 10) {
+        # If the user has entered an invalid city name 10 times, exit the script
+        Write-Host "You have entered an invalid city name 10 times. Exiting the script."
+        exit
+    }
   }
-  
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
     
@@ -201,7 +203,7 @@ function ShowResult {
     # Get the weather state and API URL from the API
     $result, $weatherApi, $titleForPrompt = GetTempUnit($choice)
 
-    Write-Host $result, $weatherApi, $titleForPrompt
+    # Write-Host $result, $weatherApi, $titleForPrompt
 
     # Call the function that will show the information in the GUI
     ShowWeatherInGui $city $lat $long $result $titleForPrompt
