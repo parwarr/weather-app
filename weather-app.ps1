@@ -55,6 +55,33 @@ function validateCityName {
   return $true
 }
 
+function GetTempUnit {
+  param (
+   [int]$choice
+  )
+
+  switch($choice) {
+    1 { 
+      $titleForPrompt = "Celsius"
+      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true"
+      $result = $weatherState.current_weather.temperature
+      return $result, $weatherApi, $titleForPrompt
+    }
+    2 { 
+      $titleForPrompt = "Fahrenheit"
+      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true&temperature_unit=fahrenheit"
+      $result = $weatherState.current_weather.temperature
+      return $result, $weatherApi, $titleForPrompt
+    }
+    default {
+    # This block will execute if $choice doesn't match any valid option
+    $errorMessage = "Invalid option: $choice"
+    Write-Host $errorMessage
+    Throw $errorMessage
+    }
+  }
+}
+
 function ShowWeatherInGui {
   param (
       [string]$city,
@@ -147,7 +174,7 @@ function ShowWeatherInGui {
 
 # Function that shows the result
 function ShowResult {
-  for ($i = 1;$i -le 10;$i++) {
+  for ($i = 0;$i -le 10;$i++) {
     # Get the city from the user
     $city = Read-Host "Enter City"
 
@@ -188,31 +215,6 @@ catch {
   Write-Host "Error occurred: $_ "
 }
 
-function GetTempUnit {
-  param (
-   [int]$choice
-  )
 
-  switch($choice) {
-    1 { 
-      $titleForPrompt = "Celsius"
-      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true"
-      $result = $weatherState.current_weather.temperature
-      return $result, $weatherApi, $titleForPrompt
-    }
-    2 { 
-      $titleForPrompt = "Fahrenheit"
-      $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true&temperature_unit=fahrenheit"
-      $result = $weatherState.current_weather.temperature
-      return $result, $weatherApi, $titleForPrompt
-    }
-    default {
-    # This block will execute if $choice doesn't match any valid option
-    $errorMessage = "Invalid option: $choice"
-    Write-Host $errorMessage
-    Throw $errorMessage
-    }
-  }
-}
 
 
