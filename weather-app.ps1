@@ -93,6 +93,9 @@ function ShowWeatherInGui {
       [string]$titleForPrompt
     
   )
+  
+  # loads the System.Windows.Forms assembly in PowerShell, enabling you to work with Windows Forms GUI elements
+  Add-Type -AssemblyName System.Windows.Forms
 
   # Create a form
   $form = New-Object Windows.Forms.Form
