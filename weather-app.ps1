@@ -177,7 +177,7 @@ function ShowWeatherInGui {
   $form.ShowDialog()
 }
 
-# This Function shows the results and openes the GUI
+# This Function shows the results and openes the GUI. First the user will be asked to enter a city, then user need to choose if he wants to display it in C° or F° after these information ar right the GUI will open and show the City, coordinates which unit and the temperatur 
 function ShowResult {
   #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
   for ($i = 0;$i -le 10;$i++) {
