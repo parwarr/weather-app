@@ -177,8 +177,9 @@ function ShowWeatherInGui {
   $form.ShowDialog()
 }
 
-# Function that shows the result
+# This Function shows the results and openes the GUI
 function ShowResult {
+  #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
   for ($i = 0;$i -le 10;$i++) {
     # Get the city from the user
     $city = Read-Host "Enter City"
