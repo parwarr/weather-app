@@ -7,8 +7,8 @@
  
   Author: sth134864@stud.gibb.ch & hpa134085@stud.gibb.ch
 
-  Date: 15.09.2023
-  Last Updated: 18.09.2023
+  Date: 15 Semptember 2023
+  Last Updated: 18 Semptember 2023
   Version: 1.0.1
 
   To-Do:
@@ -98,6 +98,7 @@ function GetTempUnit {
   }
 }
 
+# This Function is used to create the GUI for the weather output, the gui will be displayed with windows forms.
 function ShowWeatherInGui {
   param (
       [string]$city,
