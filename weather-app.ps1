@@ -130,38 +130,38 @@ function ShowWeatherInGui {
   $labelCityData.Size = New-Object Drawing.Size(260, 20)
   $labelCityData.Text = $city
   $form.Controls.Add($labelCityData)
-
+  # lable for the word Coordinate
   $labelCoordinates = New-Object Windows.Forms.Label
   $labelCoordinates.Location = New-Object Drawing.Point(20, 50)
   $labelCoordinates.Size = New-Object Drawing.Size(100, 20)
   $labelCoordinates.Text = "Coordinates:"
   $form.Controls.Add($labelCoordinates)
-
+  # lable for showing the Coordinates
   $labelCoordinatesData = New-Object Windows.Forms.Label
   $labelCoordinatesData.Location = New-Object Drawing.Point(120, 50)
   $labelCoordinatesData.Size = New-Object Drawing.Size(260, 20)
   $labelCoordinatesData.Text = "$lat, $long"
   $form.Controls.Add($labelCoordinatesData)
 
-# Create labels for Weather Unit
+  # Create labels for Weather Unit
   $labelWeatherUnit = New-Object Windows.Forms.Label
   $labelWeatherUnit.Location = New-Object Drawing.Point(20, 80)
   $labelWeatherUnit.Size = New-Object Drawing.Size(100, 20)
   $labelWeatherUnit.Text = "Weather Unit:"
   $form.Controls.Add($labelWeatherUnit)
-
+  # label for Celsius and Fahrenheit
   $labelWeatherUnitData = New-Object Windows.Forms.Label
   $labelWeatherUnitData.Location = New-Object Drawing.Point(120, 80)
   $labelWeatherUnitData.Size = New-Object Drawing.Size(260, 20)
   $labelWeatherUnitData.Text = $titleForPrompt
   $form.Controls.Add($labelWeatherUnitData)
-
+  # lable for the word Temperatur
   $labelTemperature = New-Object Windows.Forms.Label
   $labelTemperature.Location = New-Object Drawing.Point(20, 110)
   $labelTemperature.Size = New-Object Drawing.Size(100, 20)
   $labelTemperature.Text = "Temperature:"
   $form.Controls.Add($labelTemperature)
-
+  # lable for showing the Temperatur
   $labelTemperatureData = New-Object Windows.Forms.Label
   $labelTemperatureData.Location = New-Object Drawing.Point(120, 110)
   $labelTemperatureData.Size = New-Object Drawing.Size(260, 20)
@@ -191,8 +191,9 @@ function ShowWeatherInGui {
   $form.ShowDialog()
 }
 
-# Function that shows the result
+# This Function shows the results and openes the GUI
 function ShowResult {
+  #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
   for ($i = 0;$i -le 10;$i++) {
     # Get the city from the user
     $city = Read-Host "Enter City"
