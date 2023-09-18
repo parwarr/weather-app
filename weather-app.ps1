@@ -1,14 +1,28 @@
 <#
-Modul 129 LB1
-Project: Weather App
-Author: sth134864@stud.gibb.ch | hpa134085@stud.gibb.ch
+  Modul 129 LB1 - Weather App Script 
 
-ToDo
-1. Get information from WeatherAPI
-2. Define the Timespan that of the Weather that needs to be shown
-3. Get Temparatur and state of the Weather
-4. Create nice Terminal appearance for entering the City
-5. Create a GUI for the Weather Output
+  Description: This script retrieves and displays current weather information for a city entered by the user.
+  It uses geocoding to obtain coordinates and an external weather API to fetch weather data.
+  The information is then displayed in a GUI window.
+ 
+  Author: sth134864@stud.gibb.ch & hpa134085@stud.gibb.ch
+
+  Date: 15.09.2023
+  Last Updated: 18.09.2023
+  Version: 1.0.1
+
+  To-Do:
+  [x] Define API variables and functions.
+  [x] Get the city name from the user.
+  [x] Validate the city name.
+  [x] Get the coordinates for the city.
+  [x] Get the weather state and API URL from the API.
+  [x] Show the information in the GUI.
+  [x] Show the result.
+  [x] Error handling.
+  [x] Clean up code.
+  [x] Add comments.
+  [x] Add documentation.
 #>
 
 #clears the terminal for a better overview
@@ -43,7 +57,7 @@ function GetGeoCode {
 
 }
 
-function validateCityName {
+function ValidateCityName {
   param (
     [string]$city
   )
@@ -93,7 +107,7 @@ function ShowWeatherInGui {
       [string]$titleForPrompt
     
   )
-  
+
   # loads the System.Windows.Forms assembly in PowerShell, enabling you to work with Windows Forms GUI elements
   Add-Type -AssemblyName System.Windows.Forms
 
@@ -184,7 +198,7 @@ function ShowResult {
     $city = Read-Host "Enter City"
 
     # Validate the city name
-    $isValid = validateCityName($city)
+    $isValid = ValidateCityName($city)
 
     if ($isValid) {
         # If the input is valid, exit the loop
@@ -205,8 +219,6 @@ function ShowResult {
 
     # Get the weather state and API URL from the API
     $result, $weatherApi, $titleForPrompt = GetTempUnit($choice)
-
-    # Write-Host $result, $weatherApi, $titleForPrompt
 
     # Call the function that will show the information in the GUI
     ShowWeatherInGui $city $lat $long $result $titleForPrompt
