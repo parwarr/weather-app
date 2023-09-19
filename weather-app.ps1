@@ -24,24 +24,51 @@
   [x] Clean up code. -Saranhan
   [x] Add comments. -Saranhan & Parwar
   [x] Add documentation. -Saranhan & Parwar
+
+
+
+
+  # Resources
+    # API's
+      # Geocode API: https://geocode.maps.co/
+      # Weather API: https://open-meteo.com/
+
+    # Powershell
+      # Invoke-WebRequest: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1
+      # Invoke-RestMethod: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-7.1
+      # ConvertFrom-Json: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1
+      # Select-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+      # ExpandProperty: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+      # Add-Type: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/add-type?view=powershell-7.1
+      # New-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-7.1
+      # Read-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-7.1
+      # Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-7.1
+      # Set-Variable: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.1
+      # For loop: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_for?view=powershell-7.1
+      # Switch statement: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
+      # Try Catch: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.1
+      # Throw: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_throw?view=powershell-7.1
+      # Exit: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_exit?view=powershell-7.1
+      # Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
 #>
 
-#clears the terminal for a better overview
+#Clears the terminal for a better overview
 Clear-Host
 
 #Global Varibales
 $geocodeApi="https://geocode.maps.co/search?q=";
 $weatherApi= "https://api.open-meteo.com/v1/forecast";
 
-
+# Get the coordinates(latitude and longtitude) for the city from the API
 function GetGeoCode {
   param (
     [string]$city
   )
 
-  # Make the web request and store the JSON response in $geocode, ErrorAction Stop stops the script execution at the point an error occurs, Select-Object selects specific properties of objects, ExpandProperty expands details about a particular property
+  # Make the web request and store the JSON response in $geoCodeResp, ErrorAction Stop, stops the script execution at the point an error occurs, Select-Object selects specific properties of objects, ExpandProperty expands details about a particular property
   $geoCodeResp = Invoke-WebRequest -Uri "${geocodeApi}${city}" -ErrorAction Stop | Select-Object -ExpandProperty Content
 
+  # Convert the JSON response to a Powershell object, try catch block to catch errors
   try {
     # Convert the JSON response to a Powershell object
     $jsonObject = $geoCodeResp | ConvertFrom-Json
@@ -197,7 +224,7 @@ function ShowWeatherInGui {
   $form.ShowDialog()
 }
 
-# This Function shows the results and openes the GUI. First the user will be asked to enter a city, then user need to choose if he wants to display it in C° or F° after these information ar right the GUI will open and show the City, coordinates which unit and the temperatur 
+# This Function shows the results and calls the GUI function. First the user will be asked to enter a city, then the user need to choose if he wants to display it in C° or F° after these information ar given the GUI will open and show the City, coordinates which unit and the temperatur 
 function ShowResult {
   #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
   for ($i = 0;$i -le 10;$i++) {
@@ -207,13 +234,13 @@ function ShowResult {
     # Validate the city name
     $isValid = ValidateCityName($city)
 
+    # If the city name is valid, break the loop else continue
     if ($isValid) {
-        # If the input is valid, exit the loop
         break
     }
 
+    # If the user has entered an invalid city name 10 times, exit the script
     if ($i -eq 10) {
-        # If the user has entered an invalid city name 10 times, exit the script
         Write-Host "You have entered an invalid city name 10 times. Exiting the script."
         exit
     }
@@ -231,7 +258,7 @@ function ShowResult {
     ShowWeatherInGui $city $lat $long $result $titleForPrompt
 }
 
-# Main script
+# Main script, try catch block to catch errors
 try {
   # Call the function that will show the result
   ShowResult
@@ -241,29 +268,6 @@ catch {
   Write-Host "Error occurred: $_ "
 }
 
-
-# Resources
- # API's
-  # Geocode API: https://geocode.maps.co/
-  # Weather API: https://open-meteo.com/
-
- # Powershell
-  # Invoke-WebRequest: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1
-  # Invoke-RestMethod: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-7.1
-  # ConvertFrom-Json: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1
-  # Select-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
-  # ExpandProperty: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
-  # Add-Type: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/add-type?view=powershell-7.1
-  # New-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-7.1
-  # Read-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-7.1
-  # Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-7.1
-  # Set-Variable: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.1
-  # For loop: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_for?view=powershell-7.1
-  # Switch statement: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
-  # Try Catch: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.1
-  # Throw: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_throw?view=powershell-7.1
-  # Exit: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_exit?view=powershell-7.1
-  # Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
 
 
 
