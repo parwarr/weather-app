@@ -26,36 +26,34 @@
   [x] Add documentation. -Saranhan & Parwar
 
 
+  Resources:
+    API's:
+      - Geocode API: https://geocode.maps.co/
+      - Weather API: https://open-meteo.com/
 
-
-  # Resources
-    # API's
-      # Geocode API: https://geocode.maps.co/
-      # Weather API: https://open-meteo.com/
-
-    # Powershell
-      # Invoke-WebRequest: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1
-      # Invoke-RestMethod: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-7.1
-      # ConvertFrom-Json: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1
-      # Select-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
-      # ExpandProperty: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
-      # Add-Type: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/add-type?view=powershell-7.1
-      # New-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-7.1
-      # Read-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-7.1
-      # Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-7.1
-      # Set-Variable: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.1
-      # For loop: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_for?view=powershell-7.1
-      # Switch statement: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
-      # Try Catch: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.1
-      # Throw: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_throw?view=powershell-7.1
-      # Exit: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_exit?view=powershell-7.1
-      # Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
+    Powershell:
+      - Invoke-WebRequest: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1
+      - Invoke-RestMethod: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-7.1
+      - ConvertFrom-Json: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1
+      - Select-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+      - ExpandProperty: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+      - Add-Type: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/add-type?view=powershell-7.1
+      - New-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-7.1
+      - Read-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-7.1
+      - Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-7.1
+      - Set-Variable: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.1
+      - For loop: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_for?view=powershell-7.1
+      - Switch statement: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
+      - Try Catch: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.1
+      - Throw: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_throw?view=powershell-7.1
+      - Exit: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_exit?view=powershell-7.1
+      - Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
 #>
 
-#Clears the terminal for a better overview
+#Clears the terminal after every run
 Clear-Host
 
-#Global Varibales
+#Global Varibales to make them accessable in the whole script
 $geocodeApi="https://geocode.maps.co/search?q=";
 $weatherApi= "https://api.open-meteo.com/v1/forecast";
 
@@ -202,22 +200,23 @@ function ShowWeatherInGui {
   $form.Controls.Add($labelTemperatureData)
 
   # Set font and alignment for labels
-  $font = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Regular)
-  $labelCity.Font = $font
-  $labelCoordinates.Font = $font
-  $labelTemperature.Font = $font
-  $labelCityData.Font = $font
-  $labelCoordinatesData.Font = $font
-  $labelTemperatureData.Font = $font
-  $labelWeatherUnit.Font = $font
-  $labelWeatherUnitData.Font = $font
+  $fontDesc = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Bold)
+  $fontData = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Regular)
+  $labelCity.Font = $fontDesc
+  $labelCoordinates.Font = $fontDesc
+  $labelWeatherUnit.Font = $fontDesc
+  $labelTemperature.Font = $fontDesc
+  $labelCityData.Font = $fontData
+  $labelCoordinatesData.Font = $fontData
+  $labelTemperatureData.Font = $fontData
+  $labelWeatherUnitData.Font = $fontData
   $labelCity.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelCoordinates.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
+  $labelWeatherUnit.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelTemperature.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelCityData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelCoordinatesData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelTemperatureData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
-  $labelWeatherUnit.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelWeatherUnitData.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
 
   # Show the form as a dialog
