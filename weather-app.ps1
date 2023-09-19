@@ -12,17 +12,17 @@
   Version: 1.0.1
 
   To-Do:
-  [x] Define API variables and functions.
-  [x] Get the city name from the user.
-  [x] Validate the city name.
-  [x] Get the coordinates for the city.
-  [x] Get the weather state and API URL from the API.
-  [x] Show the information in the GUI.
-  [x] Show the result.
-  [x] Error handling.
-  [x] Clean up code.
-  [x] Add comments.
-  [x] Add documentation.
+  [x] Define API variables and functions. -Parwar
+  [x] Get the city name from the user. -Parwar
+  [x] Validate the city name. -Saranhan
+  [x] Get the coordinates for the city. -Parwar
+  [x] Get the weather state and API URL from the API. -Saranhan & Parwar
+  [x] Show the information in the GUI. -Parwar
+  [x] Show the result. -Parwar
+  [x] Error handling. -Saranhan
+  [x] Clean up code. -Saranhan
+  [x] Add comments. -Saranhan & Parwar
+  [x] Add documentation. -Saranhan & Parwar
 #>
 
 #clears the terminal for a better overview
@@ -57,13 +57,14 @@ function GetGeoCode {
 
 }
 
+# This Function is used to validate the city name. The city name should contain only letters (alphabets).
 function ValidateCityName {
   param (
     [string]$city
   )
 
-  # Validate the city name against the pattern
-  if ($city -eq '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
+  # Validate the city name against the pattern, if the city name contains only letters, return true, else return false
+  if ($city -match '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
     Write-Host "Error: City name should contain only letters (alphabets)."
     return $false
     }
@@ -71,11 +72,13 @@ function ValidateCityName {
   return $true
 }
 
+# This Function is used to get the temperature unit from the user and to get the temperature from the API
 function GetTempUnit {
   param (
    [int]$choice
   )
 
+# Switch statement to get the temperature unit from the user
   switch($choice) {
     1 { 
       $titleForPrompt = "Celsius"
@@ -96,9 +99,10 @@ function GetTempUnit {
     Throw $errorMessage
     }
   }
+    
 }
 
-# This Function is used to create the GUI for the weather output, the gui will be displayed with windows forms.
+# This Function is used to create the GUI for the weather output, the gui was created with windows forms.
 function ShowWeatherInGui {
   param (
       [string]$city,
