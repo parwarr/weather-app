@@ -1,29 +1,37 @@
 <#
   Modul 129 LB1 - Weather App Script 
 
-  Description: This script retrieves and displays current weather information for a city entered by the user.
-  It uses geocoding to obtain coordinates and an external weather API to fetch weather data.
-  The information is then displayed in a GUI window.
+  Description: 
+    - This script retrieves and displays current weather information for a city entered by the user.
+    - It uses geocoding to obtain coordinates and an external weather API to fetch weather data.
+    - The information is then displayed in a GUI window.
  
-  Author: sth134864@stud.gibb.ch & hpa134085@stud.gibb.ch
+  Author: 
+    - sth134864@stud.gibb.ch
+    - hpa134085@stud.gibb.ch
 
-  Date: 15 Semptember 2023
-  Last Updated: 18 Semptember 2023
-  Version: 1.0.1
+  Date: 
+    - 15 Semptember 2023
+
+  Last Updated: 
+    - 18 Semptember 2023
+
+  Version: 
+    - 1.0.1
 
   To-Do:
-  [x] Define API variables and functions. -Parwar
-  [x] Get the city name from the user. -Parwar
-  [x] Validate the city name. -Saranhan
-  [x] Get the coordinates for the city. -Parwar
-  [x] Get the data from the API's. -Saranhan
-  [x] Get the weather state and API URL from the API. -Saranhan & Parwar
-  [x] Show the information in the GUI. -Parwar
-  [x] Show the result. -Parwar
-  [x] Error handling. -Saranhan
-  [x] Clean up code. -Saranhan
-  [x] Add comments. -Saranhan & Parwar
-  [x] Add documentation. -Saranhan & Parwar
+    [x] Define API variables and functions. -Parwar
+    [x] Get the city name from the user. -Parwar
+    [x] Validate the city name. -Saranhan
+    [x] Get the coordinates for the city. -Parwar
+    [x] Get the data from the API's. -Saranhan
+    [x] Get the weather state and API URL from the API. -Saranhan & Parwar
+    [x] Show the information in the GUI. -Parwar
+    [x] Show the result. -Parwar
+    [x] Error handling. -Saranhan
+    [x] Clean up code. -Saranhan
+    [x] Add comments. -Saranhan & Parwar
+    [x] Add documentation. -Saranhan & Parwar
 
 
   Resources:
