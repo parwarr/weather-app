@@ -16,6 +16,7 @@
   [x] Get the city name from the user. -Parwar
   [x] Validate the city name. -Saranhan
   [x] Get the coordinates for the city. -Parwar
+  [x] Get the data from the API's. -Saranhan
   [x] Get the weather state and API URL from the API. -Saranhan & Parwar
   [x] Show the information in the GUI. -Parwar
   [x] Show the result. -Parwar
@@ -239,6 +240,30 @@ catch {
  # Catch errors $_ is a special variable integrated in Powershell that contains the error message
   Write-Host "Error occurred: $_ "
 }
+
+
+# Resources
+ # API's
+  # Geocode API: https://geocode.maps.co/
+  # Weather API: https://open-meteo.com/
+
+ # Powershell
+  # Invoke-WebRequest: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1
+  # Invoke-RestMethod: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-7.1
+  # ConvertFrom-Json: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1
+  # Select-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+  # ExpandProperty: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object?view=powershell-7.1
+  # Add-Type: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/add-type?view=powershell-7.1
+  # New-Object: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-object?view=powershell-7.1
+  # Read-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host?view=powershell-7.1
+  # Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-7.1
+  # Set-Variable: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.1
+  # For loop: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_for?view=powershell-7.1
+  # Switch statement: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-7.1
+  # Try Catch: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.1
+  # Throw: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_throw?view=powershell-7.1
+  # Exit: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_exit?view=powershell-7.1
+  # Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
 
 
 
