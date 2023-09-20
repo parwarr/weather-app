@@ -3,7 +3,7 @@
 
   Description: 
     - This script retrieves and displays current weather information for a city entered by the user.
-    - It uses geocoding to obtain coordinates and an external weather API to fetch weather data.
+    - It uses geocoding API to obtain coordinates and an weather API to fetch weather data.
     - The information is then displayed in a GUI window.
  
   Author: 
