@@ -31,7 +31,7 @@ The script consists of several functions and steps:
 
 - **GetGeoCode:** Retrieves latitude and longitude coordinates for the specified city using a geocoding API.
 
-- **validateCityName:** Validates the city name to ensure it contains only alphabetic characters.
+- **ValidateCityName:** Validates the city name to ensure it contains only alphabetic characters.
 
 - **GetTempUnit:** Retrieves weather information from an API based on the chosen temperature unit (°C or °F).
 

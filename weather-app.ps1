@@ -58,11 +58,13 @@
       - Clear-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-host?view=powershell-7.1
 #>
 
-#Clears the terminal after every run
+# Clears the terminal after every run
 Clear-Host
 
-#Global Varibales to make them accessable in the whole script
+# Global Varibales to make them accessable in the whole script
+# Used to get the coordinates from the API
 $geocodeApi="https://geocode.maps.co/search?q=";
+# Used to get the weather information from the API
 $weatherApi= "https://api.open-meteo.com/v1/forecast";
 
 # Get the coordinates(latitude and longtitude) for the city from the API
@@ -85,8 +87,8 @@ function GetGeoCode {
 
   }
   catch {
-     # Catch errors $_ is a special variable integrated in Powershell that contains the error message
-    Write-Host "Error occurred: $_ " -ForegroundColor Red
+  # Catch errors $_ is a special variable integrated in Powershell that contains the error message in the catch block
+  Write-Host "Error occurred: $_ " -ForegroundColor Red
   }
 
 }
@@ -148,10 +150,10 @@ function ShowWeatherInGui {
     
   )
 
-  # loads the System.Windows.Forms assembly in PowerShell, enabling you to work with Windows Forms GUI elements
+  # Loads the System.Windows.Forms assembly in PowerShell, enabling you to work with Windows Forms GUI elements
   Add-Type -AssemblyName System.Windows.Forms
 
-  # Create a form
+  # Create a form and set its properties with Windows Forms
   $form = New-Object Windows.Forms.Form
   $form.Text = "Weather App"
   $form.Size = New-Object Drawing.Size(400, 200)
@@ -170,13 +172,15 @@ function ShowWeatherInGui {
   $labelCityData.Size = New-Object Drawing.Size(260, 20)
   $labelCityData.Text = $city
   $form.Controls.Add($labelCityData)
-  # lable for the word Coordinate
+  
+  # Lable for the word Coordinate
   $labelCoordinates = New-Object Windows.Forms.Label
   $labelCoordinates.Location = New-Object Drawing.Point(20, 50)
   $labelCoordinates.Size = New-Object Drawing.Size(100, 20)
   $labelCoordinates.Text = "Coordinates:"
   $form.Controls.Add($labelCoordinates)
-  # lable for showing the Coordinates
+  
+  # Lable for showing the Coordinates
   $labelCoordinatesData = New-Object Windows.Forms.Label
   $labelCoordinatesData.Location = New-Object Drawing.Point(120, 50)
   $labelCoordinatesData.Size = New-Object Drawing.Size(260, 20)
@@ -189,26 +193,29 @@ function ShowWeatherInGui {
   $labelWeatherUnit.Size = New-Object Drawing.Size(100, 20)
   $labelWeatherUnit.Text = "Weather Unit:"
   $form.Controls.Add($labelWeatherUnit)
-  # label for Celsius and Fahrenheit
+  
+  # Label for Celsius and Fahrenheit
   $labelWeatherUnitData = New-Object Windows.Forms.Label
   $labelWeatherUnitData.Location = New-Object Drawing.Point(120, 80)
   $labelWeatherUnitData.Size = New-Object Drawing.Size(260, 20)
   $labelWeatherUnitData.Text = $titleForPrompt
   $form.Controls.Add($labelWeatherUnitData)
-  # lable for the word Temperatur
+  
+  # Lable for the word Temperatur
   $labelTemperature = New-Object Windows.Forms.Label
   $labelTemperature.Location = New-Object Drawing.Point(20, 110)
   $labelTemperature.Size = New-Object Drawing.Size(100, 20)
   $labelTemperature.Text = "Temperature:"
   $form.Controls.Add($labelTemperature)
-  # lable for showing the Temperatur
+  
+  # Lable for showing the Temperatur
   $labelTemperatureData = New-Object Windows.Forms.Label
   $labelTemperatureData.Location = New-Object Drawing.Point(120, 110)
   $labelTemperatureData.Size = New-Object Drawing.Size(260, 20)
   $labelTemperatureData.Text = "$result"
   $form.Controls.Add($labelTemperatureData)
 
-  # Set font and alignment for labels
+  # Set font for labels
   $fontDesc = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Bold)
   $fontData = New-Object Drawing.Font("Arial", 10, [Drawing.FontStyle]::Regular)
   $labelCity.Font = $fontDesc
@@ -219,6 +226,8 @@ function ShowWeatherInGui {
   $labelCoordinatesData.Font = $fontData
   $labelTemperatureData.Font = $fontData
   $labelWeatherUnitData.Font = $fontData
+  
+  # Set alignment for labels
   $labelCity.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelCoordinates.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
   $labelWeatherUnit.TextAlign = [Drawing.ContentAlignment]::MiddleLeft
@@ -236,7 +245,7 @@ function ShowWeatherInGui {
 function ShowResult {
   $maxTries = 10
 
-  #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
+  # This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
   for ($i = 1;$i -le $maxTries;$i++) {
     # Get the city from the user
     $city = Read-Host "Enter City"
@@ -259,12 +268,13 @@ function ShowResult {
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
 
-# Check if the choice is valid (1 or 2)
-for ($i = 1;$i -le $maxTries;$i++) {  
-  # Get choice from user
-  $choice = Read-Host "Choice: [1] Celsius, [2] Fahrenheit"
-  #Check if variable choice matches 1 or 2. If its true it will display the Show
-  if ($choice -eq "1" -or $choice -eq "2" ) {
+  # Check if the choice is valid (1 or 2)
+  for ($i = 1;$i -le $maxTries;$i++) {  
+    # Get choice from user
+    $choice = Read-Host "Choice: [1] Celsius, [2] Fahrenheit"
+    
+    #Check if variable choice matches 1 or 2. If its true it will display the Show
+    if ($choice -eq "1" -or $choice -eq "2" ) {
 
     # Get the weather state and API URL from the API
     $result, $titleForPrompt = GetTempUnit($choice) 
@@ -284,8 +294,8 @@ for ($i = 1;$i -le $maxTries;$i++) {
   if ($i -eq $maxTries) {
     Write-Host "You have entered an invalid unit choice $maxTries times. Exiting the script." -ForegroundColor Red
     exit
+    }
   }
-}
 }
 
 # Main script, try catch block to catch errors
@@ -294,11 +304,6 @@ try {
   ShowResult
 }
 catch {
- # Catch errors $_ is a special variable integrated in Powershell that contains the error message
+  # Catch errors $_ is a special variable integrated in Powershell that contains the error message in the catch block
   Write-Host "Error occurred: $_ " -ForegroundColor Red
 }
-
-
-
-
-
