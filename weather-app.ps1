@@ -86,7 +86,7 @@ function GetGeoCode {
   }
   catch {
      # Catch errors $_ is a special variable integrated in Powershell that contains the error message
-    Write-Host "Error occurred: $_ "
+    Write-Host "Error occurred: $_ " -ForegroundColor Red
   }
 
 }
@@ -132,12 +132,6 @@ function GetTempUnit {
       $result = $weatherState.current_weather.temperature
       # This return will output the variables in the order they are written 
       return $result, $titleForPrompt
-    }
-    default {
-    # This block will execute if $choice doesn't match any valid option
-    $errorMessage = "Invalid option: $choice"
-    Write-Host $errorMessage
-    Throw $errorMessage
     }
   }
     
@@ -301,7 +295,7 @@ try {
 }
 catch {
  # Catch errors $_ is a special variable integrated in Powershell that contains the error message
-  Write-Host "Error occurred: $_ "
+  Write-Host "Error occurred: $_ " -ForegroundColor Red
 }
 
 
