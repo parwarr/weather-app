@@ -11,10 +11,10 @@
     - hpa134085@stud.gibb.ch
 
   Date: 
-    - 15 Semptember 2023
+    - 15 September 2023
 
   Last Updated: 
-    - 18 Semptember 2023
+    - 18 September 2023
 
   Version: 
     - 1.0.1
