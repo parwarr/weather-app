@@ -23,6 +23,7 @@
     [x] Define API variables and functions. -Parwar
     [x] Get the city name from the user. -Parwar
     [x] Validate the city name. -Saranhan
+    [x] Validate the choice. -Saranhan
     [x] Get the coordinates for the city. -Parwar
     [x] Get the data from the API's. -Saranhan
     [x] Get the weather state and API URL from the API. -Saranhan & Parwar
