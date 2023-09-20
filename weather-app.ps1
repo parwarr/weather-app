@@ -115,22 +115,24 @@ function GetTempUnit {
 # Switch statement to get the temperature unit from the user
   switch($choice) {
     1 { 
+      # This variable is used to display the unit in the GUI
       $titleForPrompt = "Celsius"
       # In this variable the information for the weather gets taken from the API 
       $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true"
       # This variable takes only the information "current_weather.temperature" from the API
       $result = $weatherState.current_weather.temperature
       # This return will output the variables in the order they are written 
-      return $result, $weatherApi, $titleForPrompt
+      return $result, $titleForPrompt
     }
     2 { 
+      # This variable is used to display the unit in the GUI
       $titleForPrompt = "Fahrenheit"
       # In this variable the information for the weather gets taken from the API but with the unit Farenheit
       $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true&temperature_unit=fahrenheit"
       # This variable takes only the information "current_weather.temperature" from the API
       $result = $weatherState.current_weather.temperature
       # This return will output the variables in the order they are written 
-      return $result, $weatherApi, $titleForPrompt
+      return $result, $titleForPrompt
     }
     default {
     # This block will execute if $choice doesn't match any valid option
@@ -239,8 +241,10 @@ function ShowWeatherInGui {
 
 # This Function shows the results and calls the GUI function. First the user will be asked to enter a city, then the user need to choose if he wants to display it in C° or F° after these information ar given the GUI will open and show the City, coordinates which unit and the temperatur 
 function ShowResult {
+  $maxTries = 10
+
   #This Function looks ath the entert City name, if it doesn't match after 10 times the script will end
-  for ($i = 0;$i -le 10;$i++) {
+  for ($i = 1;$i -le $maxTries;$i++) {
     # Get the city from the user
     $city = Read-Host "Enter City"
 
@@ -253,22 +257,43 @@ function ShowResult {
     }
 
     # If the user has entered an invalid city name 10 times, exit the script
-    if ($i -eq 10) {
-        Write-Host "You have entered an invalid city name 10 times. Exiting the script."
-        exit
+    if ($i -eq $maxTries) {
+      Write-Host "You have entered an invalid city name $maxTries times. Exiting the script."
+      exit
     }
+    Write-Host "Invalid city name. Please try again. Attempt $i of $maxTries."
   }
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
-    
-    # Get choice from user
-    $choice = Read-Host "Choice: [1] Celsius, [2] Fahrenheit"
+
+# Check if the choice is valid (1 or 2)
+for ($i = 1;$i -le $maxTries;$i++) {  
+  # Get choice from user
+  $choice = Read-Host "Choice: [1] Celsius, [2] Fahrenheit"
+  #Check if variable choice matches 1 or 2. If its true it will display the Show
+  if ($choice -eq "1" -or $choice -eq "2" ) {
 
     # Get the weather state and API URL from the API
-    $result, $weatherApi, $titleForPrompt = GetTempUnit($choice)
+    $result, $titleForPrompt = GetTempUnit($choice) 
 
     # Call the function that will show the information in the GUI
     ShowWeatherInGui $city $lat $long $result $titleForPrompt
+
+    # Break the loop if the choice is valid
+    break
+  }
+    # If the option the user choose is invalid it will output this 
+    else {
+      Write-Host "Invalid choice. Please enter 1 or 2."
+      Write-Host "Invalid Unit. Please try again. Attempt $i of $maxTries."
+    }
+
+  # Action to perform if the condition is true
+  if ($i -eq $maxTries) {
+    Write-Host "You have entered an invalid Unit choice $maxTries times. Exiting the script."
+    exit
+  }
+}
 }
 
 # Main script, try catch block to catch errors
