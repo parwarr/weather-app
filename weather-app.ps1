@@ -14,7 +14,7 @@
     - 15 September 2023
 
   Last Updated: 
-    - 18 September 2023
+    - 20 September 2023
 
   Version: 
     - 1.0.1
