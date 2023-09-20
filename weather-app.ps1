@@ -99,7 +99,6 @@ function ValidateCityName {
 
   # Validate the city name against the pattern, if the city name contains only letters, return true, else return false
   if ($city -match '[^a-zA-Z]' -or $city -eq '' -or $city -eq $null) {
-    Write-Host "Error: City name should contain only letters (alphabets)."
     return $false
     }
 
@@ -258,10 +257,10 @@ function ShowResult {
 
     # If the user has entered an invalid city name 10 times, exit the script
     if ($i -eq $maxTries) {
-      Write-Host "You have entered an invalid city name $maxTries times. Exiting the script."
+      Write-Host "You have entered an invalid city name $maxTries times. Exiting the script." -ForegroundColor Red
       exit
     }
-    Write-Host "Invalid city name. Please try again. Attempt $i of $maxTries."
+    Write-Host "Invalid city name. Please try again. City name should contain only letters (alphabets). Attempt $i of $maxTries." -ForegroundColor DarkYellow
   }
     # Call GeoCode function with the city the user inserted. 
      GetGeoCode($city)
@@ -284,13 +283,12 @@ for ($i = 1;$i -le $maxTries;$i++) {
   }
     # If the option the user choose is invalid it will output this 
     else {
-      Write-Host "Invalid choice. Please enter 1 or 2."
-      Write-Host "Invalid Unit. Please try again. Attempt $i of $maxTries."
+      Write-Host "Invalid unit choice. Please enter 1 or 2. Attempt $i of $maxTries." -ForegroundColor DarkYellow
     }
 
   # Action to perform if the condition is true
   if ($i -eq $maxTries) {
-    Write-Host "You have entered an invalid Unit choice $maxTries times. Exiting the script."
+    Write-Host "You have entered an invalid unit choice $maxTries times. Exiting the script." -ForegroundColor Red
     exit
   }
 }
