@@ -116,14 +116,20 @@ function GetTempUnit {
   switch($choice) {
     1 { 
       $titleForPrompt = "Celsius"
+      # In this variable the information for the weather gets taken from the API 
       $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true"
+      # This variable takes only the information "current_weather.temperature" from the API
       $result = $weatherState.current_weather.temperature
+      # This return will output the variables in the order they are written 
       return $result, $weatherApi, $titleForPrompt
     }
     2 { 
       $titleForPrompt = "Fahrenheit"
+      # In this variable the information for the weather gets taken from the API but with the unit Farenheit
       $weatherState =  Invoke-RestMethod -Uri "${weatherApi}?latitude=${lat}&longitude=${long}&current_weather=true&temperature_unit=fahrenheit"
+      # This variable takes only the information "current_weather.temperature" from the API
       $result = $weatherState.current_weather.temperature
+      # This return will output the variables in the order they are written 
       return $result, $weatherApi, $titleForPrompt
     }
     default {
